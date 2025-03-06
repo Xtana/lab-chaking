@@ -1,0 +1,29 @@
+# Spring
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/labcheck_db
+    username: root
+    password: root
+  flyway:
+    enabled: true
+
+telegram:
+  bot:
+    username: ${BOT_NAME}
+    token: ${BOT_TOKEN}
+    notify:
+      delay:
+        value: 10
+        unit: MINUTES
+
+# App Properties
+#ru:
+#  samokhin:
+#    labchech:
+
+
+# logging
+logging:
+  level:
+    ru.lanit: debug
+#    org.springframework: debug
