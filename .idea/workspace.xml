@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="48851617-2fec-4114-93f3-a2afe6c277be" name="Changes" comment=".">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsonSchemas.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/NewUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/NewUserHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/RegistrationState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/newUser/RegistrationState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/RegistrationStatusData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/newUser/RegistrationStatusData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/NewUserRegistrationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/NewUserRegistrationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/studentGroup/FindStudentGroupByNameInbound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/studentGroup/FindStudentGroupByNameIgnoreCaseInbound.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/student/CreateStudentUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/student/CreateStudentUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/studentGroup/FindStudentGroupByNameUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/studentGroup/FindStudentGroupByNameIgnoreCaseIgnoreCaseUseCase.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2u3HJwMsmixJR6zyXALZeB1W9H5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LabCheckApplication.executor": "Run",
+    "Maven.LabCheck [clean].executor": "Run",
+    "Maven.LabCheck [install].executor": "Run",
+    "Maven.LabCheck [validate].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/MyProjects/java/lanit",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="LabCheckApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.samokhin.labCheck.fw.spring.LabCheckApplication" />
+      <module name="LabCheck" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.samokhin.labCheck.fw.spring.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.LabCheckApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="48851617-2fec-4114-93f3-a2afe6c277be" name="Changes" comment="" />
+      <created>1741470269830</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741470269830</updated>
+    </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1741611415225</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741611415225</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
+  </component>
+</project>
