@@ -1,6 +1,5 @@
 package ru.samokhin.labCheck.adapter.bot;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -8,12 +7,9 @@ import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingC
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.samokhin.labCheck.adapter.bot.handler.UserHandlerStrategy;
+import ru.samokhin.labCheck.adapter.bot.strategy.UserHandlerStrategy;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
-import ru.samokhin.labCheck.adapter.bot.service.UserService;
-import ru.samokhin.labCheck.adapter.bot.service.impl.NewUserRegistrationService;
-import ru.samokhin.labCheck.app.api.student.StudentRepository;
-import ru.samokhin.labCheck.app.api.studentGroup.StudentGroupRepository;
+import ru.samokhin.labCheck.adapter.bot.service.role.UserService;
 
 import java.util.List;
 
@@ -50,7 +46,11 @@ public class Bot extends TelegramLongPollingCommandBot {
             Message message = update.getMessage();
             Long userId = message.getFrom().getId();
             UserRole role = userService.getUserRole(userId);
-            handlerStrategy.getHandler(role).handle(this, message);
+            handlerStrategy.getHandler(role).handleNonCommandUpdate(this, message);
+        } else if (update.hasCallbackQuery()) {
+            Long userId = update.getCallbackQuery().getFrom().getId();
+            UserRole role = userService.getUserRole(userId);
+            handlerStrategy.getHandler(role).handleCallbackQuery(this, update.getCallbackQuery());
         }
     }
 

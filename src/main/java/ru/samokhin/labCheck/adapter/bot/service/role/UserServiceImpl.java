@@ -1,10 +1,9 @@
-package ru.samokhin.labCheck.adapter.bot.service.impl;
+package ru.samokhin.labCheck.adapter.bot.service.role;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
-import ru.samokhin.labCheck.adapter.bot.service.UserService;
 import ru.samokhin.labCheck.app.api.student.IsStudentExistsByTgChatIdInbound;
 import ru.samokhin.labCheck.app.api.teacher.IsTeacherExistsByTgChatIdInbound;
 

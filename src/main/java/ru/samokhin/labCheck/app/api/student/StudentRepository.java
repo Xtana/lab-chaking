@@ -5,8 +5,8 @@ import java.util.Optional;
 
 public interface StudentRepository {
     void save(Student student);
-
     Optional<Student> findByTgChatId(Long tgChatId);
-
     boolean existsByTgChatId(Long tgChatId);
+    boolean existsByEmail(String email);
+    boolean existsByStudentCardNumber(String studentCardNumber);
 }

@@ -6,9 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.samokhin.labCheck.app.api.student.CreateStudentInbound;
 import ru.samokhin.labCheck.app.api.student.StudentRepository;
 import ru.samokhin.labCheck.app.api.studentGroup.FindStudentGroupByNameInbound;
-import ru.samokhin.labCheck.app.api.studentGroup.StudentGroupRepository;
 import ru.samokhin.labCheck.domain.student.Student;
-import ru.samokhin.labCheck.domain.studentGroup.StudentGroup;
 
 @Component
 @RequiredArgsConstructor
@@ -30,6 +28,7 @@ public class CreateStudentUseCase implements CreateStudentInbound {
                     studentCardNumber,
                     tgChatId
             );
+            // TODO добавить проверку на уникальность всех зачаний
             studentRepository.save(student);
         } catch (Exception e) {
             return false;

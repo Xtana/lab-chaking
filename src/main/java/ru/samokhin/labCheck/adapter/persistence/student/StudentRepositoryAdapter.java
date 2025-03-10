@@ -27,5 +27,15 @@ public class StudentRepositoryAdapter implements StudentRepository {
         return studentJpaRepository.existsByTgChatId(tgChatId);
     }
 
+    @Override
+    public boolean existsByEmail(String email) {
+        return studentJpaRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existsByStudentCardNumber(String studentCardNumber) {
+        return studentJpaRepository.existsByStudentCardNumber(studentCardNumber);
+    }
+
 
 }

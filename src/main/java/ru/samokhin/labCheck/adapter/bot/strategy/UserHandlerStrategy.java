@@ -1,6 +1,7 @@
-package ru.samokhin.labCheck.adapter.bot.handler;
+package ru.samokhin.labCheck.adapter.bot.strategy;
 
 import org.springframework.stereotype.Component;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.UserHandler;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
 
 import java.util.HashMap;
