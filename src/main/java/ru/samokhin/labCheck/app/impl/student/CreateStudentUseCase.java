@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.samokhin.labCheck.app.api.student.CreateStudentInbound;
 import ru.samokhin.labCheck.app.api.student.StudentRepository;
-import ru.samokhin.labCheck.app.api.studentGroup.FindStudentGroupByNameInbound;
+import ru.samokhin.labCheck.app.api.studentGroup.FindStudentGroupByNameIgnoreCaseInbound;
 import ru.samokhin.labCheck.domain.student.Student;
 
 @Component
 @RequiredArgsConstructor
 public class CreateStudentUseCase implements CreateStudentInbound {
     private final StudentRepository studentRepository;
-    private final FindStudentGroupByNameInbound findStudentGroupByNameInbound;
+    private final FindStudentGroupByNameIgnoreCaseInbound findStudentGroupByNameIgnoreCaseInbound;
 
     @Transactional
     @Override
@@ -23,7 +23,7 @@ public class CreateStudentUseCase implements CreateStudentInbound {
                     firstName,
                     patronymic,
                     lastName,
-                    findStudentGroupByNameInbound.execute(groupName),
+                    findStudentGroupByNameIgnoreCaseInbound.execute(groupName),
                     email,
                     studentCardNumber,
                     tgChatId

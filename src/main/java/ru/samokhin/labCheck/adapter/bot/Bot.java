@@ -53,5 +53,4 @@ public class Bot extends TelegramLongPollingCommandBot {
             handlerStrategy.getHandler(role).handleCallbackQuery(this, update.getCallbackQuery());
         }
     }
-
 }

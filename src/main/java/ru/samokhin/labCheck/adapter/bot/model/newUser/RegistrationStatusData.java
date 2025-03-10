@@ -1,4 +1,4 @@
-package ru.samokhin.labCheck.adapter.bot.model;
+package ru.samokhin.labCheck.adapter.bot.model.newUser;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

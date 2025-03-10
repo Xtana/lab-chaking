@@ -6,19 +6,16 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.UserHandler;
-import ru.samokhin.labCheck.adapter.bot.model.RegistrationStatusData;
+import ru.samokhin.labCheck.adapter.bot.keyboard.RegistrationKeyboardBuilder;
+import ru.samokhin.labCheck.adapter.bot.model.newUser.RegistrationState;
+import ru.samokhin.labCheck.adapter.bot.model.newUser.RegistrationStatusData;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
 import ru.samokhin.labCheck.adapter.bot.service.messaging.MessageSender;
 import ru.samokhin.labCheck.adapter.bot.service.newUserRegistration.NewUserRegistrationService;
 import ru.samokhin.labCheck.app.api.student.StudentRepository;
-import ru.samokhin.labCheck.app.api.studentGroup.StudentGroupRepository;
 import ru.samokhin.labCheck.domain.student.Student;
-import ru.samokhin.labCheck.domain.studentGroup.StudentGroup;
-
-import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -26,8 +23,8 @@ import java.util.*;
 public class NewUserHandler implements UserHandler {
     private final MessageSender messageSender;
     private final NewUserRegistrationService registrationService;
-    private final StudentGroupRepository groupRepository;
     private final StudentRepository studentRepository;
+    private final RegistrationKeyboardBuilder registrationKeyboardBuilder;
 
     @Override
     public UserRole getRole() {
@@ -42,8 +39,8 @@ public class NewUserHandler implements UserHandler {
 
         if (!registrationService.userExists(userId)) {
             registrationService.startRegistration(userId, userId);
-            messageSender.send(userId, "Привет новый ользователь!\nТебе необходимо заполнить информацию о себе.", absSender);
-            messageSender.send(userId, "Введи своё имя:", absSender);
+            messageSender.send(userId, "Привет новый пользователь!\nТебе необходимо заполнить информацию о себе:", absSender);
+            askNextQuestion(absSender, userId);
             return;
         }
 
@@ -52,14 +49,12 @@ public class NewUserHandler implements UserHandler {
             messageSender.send(userId, registrationStatusData.getMessage(), absSender);
         }
         askNextQuestion(absSender, userId);
-
     }
 
     @Override
     public void handleCallbackQuery(AbsSender absSender, CallbackQuery callbackQuery) {
         Long userId = callbackQuery.getFrom().getId();
         String callbackData = callbackQuery.getData();
-        System.out.println(callbackData);
 
         if (callbackData.startsWith("select_group_")) {
             handleGroupSelection(absSender, userId, callbackData);
@@ -68,95 +63,62 @@ public class NewUserHandler implements UserHandler {
 
         switch (callbackData) {
             case "restart_registration" -> {
-                registrationService.delRegistrationData(userId);
+                registrationService.removeRegistrationData(userId);
                 registrationService.startRegistration(userId, userId);
-                messageSender.send(userId, "Начинаем регистрацию заново. Введи своё имя:", absSender);
+                messageSender.send(userId, "Начинаем регистрацию заново!", absSender);
+                askNextQuestion(absSender, userId);
             }
             case "confirm_registration" -> {
-                Student student = registrationService.removeStudent(userId);
+                Student student = registrationService.removeRegistrationData(userId).getStudent();
                 studentRepository.save(student);
-                messageSender.send(userId, "Регистрация завершена!", absSender);
+                messageSender.send(userId, "Регистрация завершена успешно!", absSender);
             }
-            default -> messageSender.send(userId, "❌ Неизвестная команда.", absSender);
+            default -> throw new RuntimeException("Неизвестная команда");
         }
+    }
+
+    private void askNextQuestion(AbsSender absSender, Long userId) {
+        messageSender.send(userId, formTextFroNextQuestion(userId), absSender, formKeyboardForNextQuestion(userId));
+    }
+
+    private String formTextFroNextQuestion(Long userId) {
+        RegistrationState state = registrationService.getState(userId);
+        return switch (state) {
+            case AWAITING_FIRST_NAME -> "Введи свое имя:";
+            case AWAITING_LAST_NAME -> "Введи свою фамилию:";
+            case AWAITING_PATRONYMIC -> "Введи свое отчество (или '-')";
+            case AWAITING_STUDENT_CARD_NUMBER -> "Введи номер студенческого билета:";
+            case AWAITING_EMAIL -> "Введи корпоративную почту:";
+            case AWAITING_GROUP_SELECTION -> "Выбери свою группу:";
+            case COMPLETED -> buildStudentInfo(userId);
+        };
+    }
+
+    private String buildStudentInfo(Long userId) {
+        Student student = registrationService.getStudent(userId).getStudent();
+        return String.format("Имя: %s\nФамилия: %s\nОтчество: %s\nEmail: %s\nНомер зачетки: %s\nГруппа: %s",
+                student.getFirstName(),
+                student.getLastName(),
+                student.getPatronymic() == null ? "-" : student.getPatronymic(),
+                student.getEmail(),
+                student.getStudentCardNumber(),
+                student.getGroupName().getName());
+    }
+
+    private InlineKeyboardMarkup formKeyboardForNextQuestion(Long userId) {
+        RegistrationState state = registrationService.getState(userId);
+        return switch (state) {
+            case AWAITING_FIRST_NAME -> null;
+            case AWAITING_LAST_NAME, AWAITING_PATRONYMIC,
+                 AWAITING_STUDENT_CARD_NUMBER, AWAITING_EMAIL -> registrationKeyboardBuilder.getRestartButtonKeyboard();
+            case AWAITING_GROUP_SELECTION -> registrationKeyboardBuilder.getGroupSelection();
+            case COMPLETED -> registrationKeyboardBuilder.getConfirmationKeyboard();
+        };
     }
 
     private void handleGroupSelection(AbsSender absSender, Long userId, String callbackData) {
         String groupName = callbackData.replace("select_group_", "");
         registrationService.updateStudentData(userId, groupName);
         askNextQuestion(absSender, userId);
-    }
-
-
-
-    private void askNextQuestion(AbsSender absSender, Long userId) {
-        switch (registrationService.getState(userId)) {
-            case AWAITING_LAST_NAME -> {
-                messageSender.send(userId, "Введи свою фамилию:", absSender, getRestartButtonKeyboard());
-            }
-            case AWAITING_PATRONYMIC -> {
-                messageSender.send(userId, "Введи свое отчество (или отправь '-' если нет):", absSender, getRestartButtonKeyboard());
-            }
-            case AWAITING_STUDENT_CARD_NUMBER -> {
-                messageSender.send(userId, "Введи номер студенческого билета (только цифры):", absSender, getRestartButtonKeyboard());
-            }
-            case AWAITING_EMAIL -> {
-                messageSender.send(userId, "Введи корпаративную почту:", absSender, getRestartButtonKeyboard());
-            }
-            case AWAITING_GROUP_SELECTION -> sendGroupSelection(absSender, userId);
-            case COMPLETED -> {
-                Student student = registrationService.getStudent(userId);
-                String studentInfo = String.format("Имя: %s\nФамилия: %s\nОтчество: %s\nEmail: %s\nНомер зачетки: %s\nГруппа: %s",
-                        student.getFirstName(),
-                        student.getLastName(),
-                        student.getPatronymic() == null ? "-" : student.getPatronymic(),
-                        student.getEmail(),
-                        student.getStudentCardNumber(),
-                        student.getGroupName().getName());
-                messageSender.send(userId, studentInfo, absSender, getConfirmationKeyboard());}
-            default -> {}
-        }
-    }
-
-    private void sendGroupSelection(AbsSender absSender, Long userId) {
-        List<StudentGroup> groups = groupRepository.findAll();
-        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-
-        for (StudentGroup group : groups) {
-            InlineKeyboardButton button = new InlineKeyboardButton();
-            button.setText(group.getName());
-            button.setCallbackData("select_group_" + group.getName());
-            keyboard.add(Collections.singletonList(button));
-        }
-
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        markup.setKeyboard(keyboard);
-
-        messageSender.send(userId, "Выбери свою группу:", absSender, markup);
-    }
-
-    private InlineKeyboardMarkup getRestartButtonKeyboard() {
-        InlineKeyboardButton restartButton = new InlineKeyboardButton();
-        restartButton.setText("Начать заново");
-        restartButton.setCallbackData("restart_registration");
-        List<InlineKeyboardButton> row = Collections.singletonList(restartButton);
-        List<List<InlineKeyboardButton>> keyboard = Collections.singletonList(row);
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        markup.setKeyboard(keyboard);
-        return markup;
-    }
-
-    private InlineKeyboardMarkup getConfirmationKeyboard() {
-        InlineKeyboardButton confirmButton = new InlineKeyboardButton();
-        confirmButton.setText("Подтвердить данные");
-        confirmButton.setCallbackData("confirm_registration");
-        InlineKeyboardButton restartButton = new InlineKeyboardButton();
-        restartButton.setText("Начать занова");
-        restartButton.setCallbackData("restart_registration");
-        List<InlineKeyboardButton> row = Arrays.asList(confirmButton, restartButton);
-        List<List<InlineKeyboardButton>> keyboard = Collections.singletonList(row);
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        markup.setKeyboard(keyboard);
-        return markup;
     }
 }

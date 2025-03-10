@@ -1,4 +1,4 @@
-package ru.samokhin.labCheck.adapter.bot.model;
+package ru.samokhin.labCheck.adapter.bot.model.newUser;
 
 public enum RegistrationState {
     AWAITING_FIRST_NAME,
@@ -7,6 +7,5 @@ public enum RegistrationState {
     AWAITING_STUDENT_CARD_NUMBER,
     AWAITING_EMAIL,
     AWAITING_GROUP_SELECTION,
-    COMPLETED,
-    CONFIRM
+    COMPLETED
 }
