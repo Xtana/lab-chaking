@@ -29,7 +29,7 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_group_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private StudentGroup groupName;
+    private StudentGroup studentGroup;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -41,11 +41,11 @@ public class Student {
     private Long tgChatId;
 
     public Student(String firstName, String patronymic, String lastName,
-                   StudentGroup groupName, String email, String studentCardNumber, Long tgChatId) {
+                   StudentGroup studentGroup, String email, String studentCardNumber, Long tgChatId) {
         this.firstName = firstName;
         this.patronymic = patronymic;
         this.lastName = lastName;
-        this.groupName = groupName;
+        this.studentGroup = studentGroup;
         this.email = email;
         this.studentCardNumber = studentCardNumber;
         this.tgChatId = tgChatId;

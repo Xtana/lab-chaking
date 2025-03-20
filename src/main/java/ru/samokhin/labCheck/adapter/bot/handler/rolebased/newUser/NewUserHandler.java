@@ -14,7 +14,7 @@ import ru.samokhin.labCheck.adapter.bot.model.newUser.RegistrationStatusData;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
 import ru.samokhin.labCheck.adapter.bot.service.messaging.MessageSender;
 import ru.samokhin.labCheck.adapter.bot.service.newUserRegistration.NewUserRegistrationService;
-import ru.samokhin.labCheck.app.api.student.StudentRepository;
+import ru.samokhin.labCheck.app.api.student.CreateStudentInbound;
 import ru.samokhin.labCheck.domain.student.Student;
 
 @Component
@@ -23,7 +23,7 @@ import ru.samokhin.labCheck.domain.student.Student;
 public class NewUserHandler implements UserHandler {
     private final MessageSender messageSender;
     private final NewUserRegistrationService registrationService;
-    private final StudentRepository studentRepository;
+    private final CreateStudentInbound createStudentInbound;
     private final RegistrationKeyboardBuilder registrationKeyboardBuilder;
 
     @Override
@@ -70,7 +70,14 @@ public class NewUserHandler implements UserHandler {
             }
             case "confirm_registration" -> {
                 Student student = registrationService.removeRegistrationData(userId).getStudent();
-                studentRepository.save(student);
+                createStudentInbound.execute(
+                        student.getFirstName(),
+                        student.getPatronymic(),
+                        student.getLastName(),
+                        student.getStudentGroup().getName(),
+                        student.getEmail(),
+                        student.getStudentCardNumber(),
+                        student.getTgChatId()); //TODO добавить проверку успешности операции
                 messageSender.send(userId, "Регистрация завершена успешно!", absSender);
             }
             default -> throw new RuntimeException("Неизвестная команда");
@@ -78,10 +85,10 @@ public class NewUserHandler implements UserHandler {
     }
 
     private void askNextQuestion(AbsSender absSender, Long userId) {
-        messageSender.send(userId, formTextFroNextQuestion(userId), absSender, formKeyboardForNextQuestion(userId));
+        messageSender.send(userId, formTextForNextQuestion(userId), absSender, formKeyboardForNextQuestion(userId));
     }
 
-    private String formTextFroNextQuestion(Long userId) {
+    private String formTextForNextQuestion(Long userId) {
         RegistrationState state = registrationService.getState(userId);
         return switch (state) {
             case AWAITING_FIRST_NAME -> "Введи свое имя:";
@@ -102,7 +109,7 @@ public class NewUserHandler implements UserHandler {
                 student.getPatronymic() == null ? "-" : student.getPatronymic(),
                 student.getEmail(),
                 student.getStudentCardNumber(),
-                student.getGroupName().getName());
+                student.getStudentGroup().getName());
     }
 
     private InlineKeyboardMarkup formKeyboardForNextQuestion(Long userId) {

@@ -17,7 +17,7 @@ public class GroupSelectionHandler implements RegistrationStateHandler {
         if (input == null || input.isBlank()) {
             return new RegistrationStatusData(false, "Группа не может быть пустой!");
         }
-        student.setGroupName(findStudentGroupByNameIgnoreCaseInbound.execute(input));
+        student.setStudentGroup(findStudentGroupByNameIgnoreCaseInbound.execute(input));
         return new RegistrationStatusData(true, "");
     }
 
