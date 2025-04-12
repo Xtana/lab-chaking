@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import ru.samokhin.labCheck.app.api.assignmentGroup.AssignmentGroupRepository;
 import ru.samokhin.labCheck.domain.assignmentGroup.AssignmentGroup;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class AssignmentGroupRepositoryAdapter implements AssignmentGroupRepository {
@@ -13,5 +16,15 @@ public class AssignmentGroupRepositoryAdapter implements AssignmentGroupReposito
     @Override
     public void save(AssignmentGroup assignmentGroup) {
         assignmentGroupJpaRepository.save(assignmentGroup);
+    }
+
+    @Override
+    public Optional<AssignmentGroup> findByNameIgnoreCase(String name) {
+        return assignmentGroupJpaRepository.findByNameIgnoreCase(name);
+    }
+
+    @Override
+    public List<AssignmentGroup> findAll() {
+        return assignmentGroupJpaRepository.findAll();
     }
 }

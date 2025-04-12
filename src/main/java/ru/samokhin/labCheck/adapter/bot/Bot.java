@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.samokhin.labCheck.adapter.bot.strategy.UserHandlerStrategy;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
-import ru.samokhin.labCheck.adapter.bot.service.role.UserService;
+import ru.samokhin.labCheck.adapter.bot.service.userRole.UserRoleService;
 
 import java.util.List;
 
@@ -17,20 +17,20 @@ import java.util.List;
 @Service
 @Slf4j
 public class Bot extends TelegramLongPollingCommandBot {
-    private final UserService userService;
+    private final UserRoleService userRoleService;
     private final UserHandlerStrategy handlerStrategy;
     private final String botUsername;
 
     public Bot(
             @Value("${telegram.bot.token}") String botToken,
             @Value("${telegram.bot.username}") String botUsername,
-            UserService userService,
+            UserRoleService userRoleService,
             UserHandlerStrategy handlerStrategy,
             List<IBotCommand> commandList
     ) {
         super(botToken);
         this.botUsername = botUsername;
-        this.userService = userService;
+        this.userRoleService = userRoleService;
         this.handlerStrategy = handlerStrategy;
         commandList.forEach(this::register);
     }
@@ -45,11 +45,11 @@ public class Bot extends TelegramLongPollingCommandBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             Message message = update.getMessage();
             Long userId = message.getFrom().getId();
-            UserRole role = userService.getUserRole(userId);
+            UserRole role = userRoleService.getUserRole(userId);
             handlerStrategy.getHandler(role).handleNonCommandUpdate(this, message);
         } else if (update.hasCallbackQuery()) {
             Long userId = update.getCallbackQuery().getFrom().getId();
-            UserRole role = userService.getUserRole(userId);
+            UserRole role = userRoleService.getUserRole(userId);
             handlerStrategy.getHandler(role).handleCallbackQuery(this, update.getCallbackQuery());
         }
     }

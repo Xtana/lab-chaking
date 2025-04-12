@@ -5,9 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
 
-public interface UserHandler {
+public interface UserHandler extends ProcessHandler {
     UserRole getRole();
-    void handleNonCommandUpdate(AbsSender absSender, Message message);
-    void handleCallbackQuery(AbsSender absSender, CallbackQuery callbackQuery);
 }
 

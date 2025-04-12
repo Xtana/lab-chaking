@@ -6,6 +6,8 @@ spring:
     password: root
   flyway:
     enabled: true
+    clean-on-validation-error: true
+    clean-disabled: false
 
 telegram:
   bot:
