@@ -17,8 +17,8 @@ public class RegistrationService {
     private final Map<Long, RegistrationContext> userContexts = new ConcurrentHashMap<>();
     private final RegistrationStateMachine stateMachine;
 
-    public boolean exists(Long userId) {
-        return userContexts.containsKey(userId);
+    public boolean exists(Long tgChatId) {
+        return userContexts.containsKey(tgChatId);
     }
 
     public void startRegistration(Long tgChatId) {

@@ -44,8 +44,8 @@ public class Bot extends TelegramLongPollingCommandBot {
     public void processNonCommandUpdate(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             Message message = update.getMessage();
-            Long userId = message.getFrom().getId();
-            UserRole role = userRoleService.getUserRole(userId);
+            Long tgChatId = message.getFrom().getId();
+            UserRole role = userRoleService.getUserRole(tgChatId);
             handlerStrategy.getHandler(role).handleNonCommandUpdate(this, message);
         } else if (update.hasCallbackQuery()) {
             Long userId = update.getCallbackQuery().getFrom().getId();

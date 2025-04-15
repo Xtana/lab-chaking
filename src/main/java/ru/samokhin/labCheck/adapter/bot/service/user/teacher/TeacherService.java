@@ -5,20 +5,22 @@ import org.springframework.stereotype.Service;
 import ru.samokhin.labCheck.adapter.bot.model.teacher.TeacherState;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Service
 @RequiredArgsConstructor
 public class TeacherService {
     private final Map<Long, TeacherState> teacherStateMap = new ConcurrentHashMap<>();
-    private final Map<Long, Boolean> teacherActiveMap = new ConcurrentHashMap<>();
+    private final Set<Long> teacherActiveSet = new CopyOnWriteArraySet<>();
 
-    public boolean exists(Long userId) {
-        return  teacherStateMap.containsKey(userId);
+    public boolean exists(Long tgChatId) {
+        return  teacherStateMap.containsKey(tgChatId);
     }
 
-    public boolean isActive(Long userId) {
-        return  teacherActiveMap.containsKey(userId);
+    public boolean isActive(Long tgChatId) {
+        return  teacherActiveSet.contains(tgChatId);
     }
 
     public void createTeacherState(Long tgChatId, TeacherState teacherState) {
@@ -26,10 +28,14 @@ public class TeacherService {
     }
 
     public void activateTeacher(Long tgChatId) {
-        teacherActiveMap.put(tgChatId, true);
+        teacherActiveSet.add(tgChatId);
     }
 
     public TeacherState getState(Long tgChatId) {
         return teacherStateMap.get(tgChatId);
+    }
+
+    public void removeTeacherData(Long tgChatId) {
+        teacherStateMap.remove(tgChatId);
     }
 }

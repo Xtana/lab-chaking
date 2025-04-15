@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.ProcessHandler;
-import ru.samokhin.labCheck.adapter.bot.keyboard.teacher.CreateTaskInlineKeyboardBuilder;
+import ru.samokhin.labCheck.adapter.bot.keyboard.InlineKeyboardFactory;
 import ru.samokhin.labCheck.adapter.bot.model.StatusData;
 import ru.samokhin.labCheck.adapter.bot.model.teacher.createTask.CreateTaskState;
 import ru.samokhin.labCheck.adapter.bot.service.messaging.MessageSender;
+import ru.samokhin.labCheck.adapter.bot.service.user.teacher.TeacherService;
 import ru.samokhin.labCheck.adapter.bot.service.user.teacher.createTask.CreateTaskService;
 import ru.samokhin.labCheck.app.api.assignmentGroup.GetAllAssignmentGroupsNameStringInbound;
 import ru.samokhin.labCheck.app.api.studentGroup.GetAllStudentGroupNameStringsInbound;
@@ -29,9 +31,11 @@ import java.util.stream.Collectors;
 public class CreateTaskHandler implements ProcessHandler {
     private final MessageSender messageSender;
     private final CreateTaskService createTaskService;
-    private final CreateTaskInlineKeyboardBuilder createTaskKeyboardBuilder;
+    private final TeacherService teacherService;
+    private final InlineKeyboardFactory inlineKeyboardFactory;
     private final GetAllAssignmentGroupsNameStringInbound getAllAssignmentGroupsNameStringInbound;
     private final GetAllStudentGroupNameStringsInbound getAllStudentGroupNameStringsInbound;
+
     private Message lastMessageForKbDeleting;
 
     private static final Map<String, String> COMPLETE_STATE_BUTTON_DATA = new HashMap<>() {{
@@ -40,7 +44,7 @@ public class CreateTaskHandler implements ProcessHandler {
         put("В меню", "В меню");
     }};
 
-    private static final Map<String, String> CHANGE_STSTE_BUTTON_DATA = new HashMap<>() {{
+    private static final Map<String, String> CHANGE_STATE_BUTTON_DATA = new HashMap<>() {{
         put("Начать заново", "Начать заново");
         put("В меню", "В меню");
     }};
@@ -75,14 +79,14 @@ public class CreateTaskHandler implements ProcessHandler {
             }
         }
 
-        StatusData statusData = createTaskService.updateStatusData(tgChatId, messageText);
+        StatusData statusData = createTaskService.updateState(tgChatId, messageText);
         if (!statusData.isSuccess()) {
             messageSender.send(tgChatId, statusData.getMessage(), absSender);
             return;
         }
         InlineKeyboardMarkup inlineKeyboard = lastMessageForKbDeleting.getReplyMarkup();
         if (inlineKeyboard != null && inlineKeyboard.getKeyboard() != null && !inlineKeyboard.getKeyboard().isEmpty()) {
-            createTaskKeyboardBuilder.removeInlineKeyboard(absSender, lastMessageForKbDeleting);
+            inlineKeyboardFactory.removeInlineKeyboard(absSender, lastMessageForKbDeleting);
         }
 
         lastMessageForKbDeleting = askNextQuestion(absSender, tgChatId);
@@ -99,24 +103,32 @@ public class CreateTaskHandler implements ProcessHandler {
                 createTaskService.startCreatingTask(tgChatId);
                 messageSender.send(tgChatId, "Начинаем создание задачи заново!", absSender);
                 lastMessageForKbDeleting = askNextQuestion(absSender, tgChatId);
-                createTaskKeyboardBuilder.removeInlineKeyboard(absSender, callbackQuery);
+                inlineKeyboardFactory.removeInlineKeyboard(absSender, callbackQuery);
                 return;
             }
             case "В меню" -> {
-
+                createTaskService.removeCreateTaskData(tgChatId);
+                teacherService.removeTeacherData(tgChatId);
+                messageSender.send(tgChatId, "Вы вышли в главное меню!", absSender);
+                inlineKeyboardFactory.removeInlineKeyboard(absSender, callbackQuery);
                 return;
             }
         }
 
-        StatusData statusData = createTaskService.updateStatusData(tgChatId, callbackData);
+        StatusData statusData = createTaskService.updateState(tgChatId, callbackData);
         if (!statusData.isSuccess()) {
             lastMessageForKbDeleting = messageSender.send(tgChatId, statusData.getMessage(), absSender,
-                    createTaskKeyboardBuilder.getRowInlineButton(CHANGE_STSTE_BUTTON_DATA));
-            createTaskKeyboardBuilder.removeInlineKeyboard(absSender, callbackQuery);
+                    inlineKeyboardFactory.createRowKeyboard(CHANGE_STATE_BUTTON_DATA));
+            inlineKeyboardFactory.removeInlineKeyboard(absSender, callbackQuery);
             return;
         }
         lastMessageForKbDeleting = askNextQuestion(absSender, tgChatId);
-        createTaskKeyboardBuilder.removeInlineKeyboard(absSender, callbackQuery);
+        inlineKeyboardFactory.removeInlineKeyboard(absSender, callbackQuery);
+
+        if (createTaskService.getState(tgChatId) == CreateTaskState.CREATE_TASK_COMPLETED) {
+            createTaskService.removeCreateTaskData(tgChatId);
+            teacherService.removeTeacherData(tgChatId);
+        }
     }
 
     private Message askNextQuestion(AbsSender absSender, Long tgChatId) {
@@ -151,16 +163,16 @@ public class CreateTaskHandler implements ProcessHandler {
         );
     }
 
-    private InlineKeyboardMarkup formKeyboardForNextQuestion(Long tgChatId) {
+    private ReplyKeyboard formKeyboardForNextQuestion(Long tgChatId) {
         CreateTaskState state = createTaskService.getState(tgChatId);
         return switch (state) {
-            case CREATE_TASK_AWAITING_ASSIGNMENT_GROUP_NAME -> createTaskKeyboardBuilder.getColumnInlineButton(getAssignedGroupDataMap());
+            case CREATE_TASK_AWAITING_ASSIGNMENT_GROUP_NAME -> inlineKeyboardFactory.createColumnKeyboard(getAssignedGroupDataMap());
             case CREATE_TASK_AWAITING_TASK_NAME, CREATE_TASK_AWAITING_TASK_DESCRIPTION,
                  CREATE_TASK_AWAITING_TEST, CREATE_TASK_AWAITING_TEST_NAME
-                    -> createTaskKeyboardBuilder.getRowInlineButton(CHANGE_STSTE_BUTTON_DATA);
-            case CREATE_TASK_AWAITING_STUDENT_GROUP -> createTaskKeyboardBuilder.getColumnInlineButton(getStudentGroupDataMap(tgChatId));
-            case CREATE_TASK_AWAITING_MORE_TEST, CREATE_TASK_AWAITING_MORE_STUDENT_GROUP -> createTaskKeyboardBuilder.getRowInlineButton(YES_NO_BUTTON_DATA);
-            case CREATE_TASK_FILL_DATA -> createTaskKeyboardBuilder.getRowInlineButton(COMPLETE_STATE_BUTTON_DATA);
+                    -> inlineKeyboardFactory.createRowKeyboard(CHANGE_STATE_BUTTON_DATA);
+            case CREATE_TASK_AWAITING_STUDENT_GROUP -> inlineKeyboardFactory.createColumnKeyboard(getStudentGroupDataMap(tgChatId));
+            case CREATE_TASK_AWAITING_MORE_TEST, CREATE_TASK_AWAITING_MORE_STUDENT_GROUP -> inlineKeyboardFactory.createRowKeyboard(YES_NO_BUTTON_DATA);
+            case CREATE_TASK_FILL_DATA -> inlineKeyboardFactory.createRowKeyboard(COMPLETE_STATE_BUTTON_DATA);
             case CREATE_TASK_COMPLETED -> null;
         };
     }
@@ -184,7 +196,7 @@ public class CreateTaskHandler implements ProcessHandler {
                 createTaskService.getContext(tgChatId).getTask().getStudentGroups() != null
                 ? createTaskService.getContext(tgChatId).getTask().getStudentGroups().stream()
                 .map(StudentGroup::getName)
-                .collect(Collectors.toList())
+                .toList()
                 : List.of(); // если null — значит ничего не выбрано
 
         // Фильтруем уже выбранные

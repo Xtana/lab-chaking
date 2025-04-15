@@ -18,12 +18,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @RequiredArgsConstructor
 public class CreateTaskService {
-    private final Map<Long, CreateTaskContext> createTaskContext = new ConcurrentHashMap<>();
     private final CreateTaskStateMachine stateMachine;
     private final FindTeacherByTgChatIdInbound findTeacherByTgChatIdInbound;
 
-    public boolean exists(Long userId) {
-        return  createTaskContext.containsKey(userId);
+    private final Map<Long, CreateTaskContext> createTaskContext = new ConcurrentHashMap<>();
+
+    public boolean exists(Long tgChatId) {
+        return createTaskContext.containsKey(tgChatId);
     }
 
     public StatusData startCreatingTask(Long tgChatId) {
@@ -43,7 +44,7 @@ public class CreateTaskService {
         return new StatusData(true, null);
     }
 
-    public StatusData updateStatusData(Long tgChatId, String input) {
+    public StatusData updateState(Long tgChatId, String input) {
         CreateTaskContext context = createTaskContext.get(tgChatId);
         if (context == null) {
             throw new RuntimeException("Создание задачи не начато.");
@@ -59,7 +60,7 @@ public class CreateTaskService {
         return createTaskContext.get(tgChatId);
     }
 
-    public CreateTaskContext removeCreateTaskData(Long tgChatId) {
-        return createTaskContext.remove(tgChatId);
+    public void removeCreateTaskData(Long tgChatId) {
+        createTaskContext.remove(tgChatId);
     }
 }

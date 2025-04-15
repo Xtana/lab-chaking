@@ -27,4 +27,15 @@ public class AssignmentGroupRepositoryAdapter implements AssignmentGroupReposito
     public List<AssignmentGroup> findAll() {
         return assignmentGroupJpaRepository.findAll();
     }
+
+    @Override
+    public void delete(AssignmentGroup assignmentGroup) {
+        assignmentGroupJpaRepository.delete(assignmentGroup);
+    }
+
+    @Override
+    public List<String> findByStudentTgChatId(Long tgChatId) {
+        return assignmentGroupJpaRepository.findByStudentTgChatId(tgChatId);
+    }
+
 }

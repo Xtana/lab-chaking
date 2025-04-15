@@ -4,7 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum TeacherState {
-    CREATE_TASK("Создать задачу");
+    CREATE_ASSIGNMENT_GROUP("Добавить уч группу"),
+    DELETE_ASSIGNMENT_GROUP("Удалить уч группу"),
+    CREATE_STUDENT_GROUP("Добавить студ группу"),
+    DELETE_STUDENT_GROUP("Удалить студ группу"),
+    CREATE_TASK("Создать задачу"),
+    DELETE_TASK("Удалить задачу");
 
     private final String displayName;
 

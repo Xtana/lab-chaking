@@ -20,10 +20,10 @@ public class CreateTaskStateMachine {
     }
 
     public StatusData processInput(CreateTaskContext context, String input) {
-        CreateTaskState current = context.getCurrentState();
-        CreateTaskStateHandler handler = handlers.get(current);
+        CreateTaskState currentState = context.getCurrentState();
+        CreateTaskStateHandler handler = handlers.get(currentState);
         if (handler == null) {
-            throw new RuntimeException("Неизвестное состояние регистрации.");
+            throw new RuntimeException("Неизвестное состояние.");
         }
 
         StatusData result = handler.handle(context, input);

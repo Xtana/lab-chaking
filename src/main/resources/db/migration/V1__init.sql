@@ -61,6 +61,38 @@ CREATE TABLE TASK_STUDENT_GROUP (
     CONSTRAINT fk_task_student_group_group FOREIGN KEY (student_group_id) REFERENCES STUDENT_GROUP(id) ON DELETE CASCADE
 );
 
+-- Создание таблицы SUBMISSION
+CREATE TABLE SUBMISSION (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    script TEXT NOT NULL,
+    task_id BIGINT NOT NULL,
+    student_id BIGINT NOT NULL,
+    CONSTRAINT fk_submission_task FOREIGN KEY (task_id) REFERENCES TASK(id) ON DELETE CASCADE,
+    CONSTRAINT fk_submission_student FOREIGN KEY (student_id) REFERENCES STUDENT(id) ON DELETE CASCADE,
+    CONSTRAINT uq_submission_unique UNIQUE (student_id, task_id)
+);
+
+CREATE TABLE STATUS_TEST_RESULT (
+    status VARCHAR(32) PRIMARY KEY
+);
+
+-- Создание таблицы TEST_RESULT
+CREATE TABLE TEST_RESULT (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    log TEXT,
+    status VARCHAR(32) NOT NULL,
+    test_id BIGINT NOT NULL,
+    submission_id BIGINT NOT NULL,
+    CONSTRAINT fk_result_test FOREIGN KEY (test_id) REFERENCES TEST(id) ON DELETE CASCADE,
+    CONSTRAINT fk_result_submission FOREIGN KEY (submission_id) REFERENCES SUBMISSION(id) ON DELETE CASCADE,
+    CONSTRAINT fk_result_status FOREIGN KEY (status) REFERENCES STATUS_TEST_RESULT(status),
+    CONSTRAINT uq_test_result UNIQUE (test_id, submission_id)
+);
+
+INSERT INTO STATUS_TEST_RESULT (status) VALUES
+('SUCCESS'),
+('FAILURE');
+
 -- Заполнение таблицы STUDENT_GROUP
 INSERT INTO STUDENT_GROUP (name) VALUES
 ('ИПМбд-01-21'),

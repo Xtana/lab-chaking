@@ -7,8 +7,7 @@ import java.util.Optional;
 
 public interface StudentGroupRepository {
     List<StudentGroup> findAll();
-
     void save(StudentGroup studentGroup);
-
     Optional<StudentGroup> findByNameIgnoreCase(String name);
+    void delete(StudentGroup studentGroup);
 }

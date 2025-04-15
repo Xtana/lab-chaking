@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48851617-2fec-4114-93f3-a2afe6c277be" name="Changes" comment="added realisation of AssignmentGroup">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationFirstNameHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationLastNameHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationPatronymicHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/InlineKeyboardFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="48851617-2fec-4114-93f3-a2afe6c277be" name="Changes" comment="commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/Bot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/command/StartCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/command/StartCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/UserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/UserHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/NewUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/NewUserHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationStateMachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationStateMachine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/student/StudentHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/student/StudentHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/TeacherHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/TeacherHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/KeyboardFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/RegistrationKeyboardBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/newUser/RegistrationState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/newUser/RegistrationState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/newUser/RegistrationStatusData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/StatusData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/messaging/MessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/messaging/MessageSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/messaging/TelegramMessageSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/messaging/TelegramMessageSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/NewUserRegistrationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/user/newUserRegistration/RegistrationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/EmailHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationEmailHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/FirstNameHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/GroupSelectionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationGroupSelectionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/LastNameHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/PatronymicHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/RegistrationStateHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationStateHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/RegistrationStateMachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/RegistrationStateMachine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/newUserRegistration/state/StudentCardNumberHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/newUser/registration/state/StudentCardNumberHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/role/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/userRole/UserRoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/role/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/userRole/UserRoleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/assignmentGroup/AssignmentGroupJpaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/task/TaskJpaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/assignmentGroup/AssignmentGroupRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/task/TaskRepositoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/studentGroup/StudentGroupJpaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/studentGroup/StudentGroupJpaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/assignmentGroup/AssignmentGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/task/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/assignmentGroup/CreateAssignmentGroupInbound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/task/CreateTaskInbound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/assignmentGroup/CreateAssignmentGroupUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/task/CreateTaskUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/assignmentGroup/AssignmentGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/task/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/CreateTaskHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/CreateTaskHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/state/CreateTaskAssignmentGroupHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/state/CreateTaskAssignmentGroupHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/state/CreateTaskStateMachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/state/CreateTaskStateMachine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/state/CreateTaskTestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/createTask/state/CreateTaskTestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/InlineKeyboardAbstract.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/ReplyKeyboardAbstract.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/newUser/RegistrationInlineKeyboardBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/teacher/CreateTaskInlineKeyboardBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/keyboard/teacher/TeacherReplyKeyboardBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/teacher/TeacherState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/model/teacher/TeacherState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/user/newUserRegistration/RegistrationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/user/newUserRegistration/RegistrationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/user/teacher/TeacherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/user/teacher/TeacherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/user/teacher/createTask/CreateTaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/user/teacher/createTask/CreateTaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/userRole/UserRoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/service/userRole/UserRoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/assignmentGroup/AssignmentGroupJpaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/assignmentGroup/AssignmentGroupJpaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/assignmentGroup/AssignmentGroupRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/assignmentGroup/AssignmentGroupRepositoryAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/studentGroup/StudentGroupRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/studentGroup/StudentGroupRepositoryAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/task/TaskJpaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/task/TaskJpaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/task/TaskRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/persistence/task/TaskRepositoryAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/assignmentGroup/AssignmentGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/assignmentGroup/AssignmentGroupRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/studentGroup/StudentGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/studentGroup/StudentGroupRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/task/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/api/task/TaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/assignmentGroup/CreateAssignmentGroupUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/assignmentGroup/CreateAssignmentGroupUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/assignmentGroup/FindAssignmentGroupByNameIgnoreCaseUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/assignmentGroup/FindAssignmentGroupByNameIgnoreCaseUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/assignmentGroup/GetAllAssignmentGroupsNameStringNameStringUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/assignmentGroup/GetAllAssignmentGroupsNameStringNameStringUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/studentGroup/GetAllStudentGroupNameStringsUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/studentGroup/GetAllStudentGroupNameStringsUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/teacher/FindTeacherByTgChatIdUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/teacher/FindTeacherByTgChatIdUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/teacher/IsTeacherExistsByTgChatIdUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/app/impl/teacher/IsTeacherExistsByTgChatIdUseCase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/student/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/student/Student.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/studentGroup/StudentGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/studentGroup/StudentGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/teacher/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/domain/teacher/Teacher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__init.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,8 +63,28 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Xtana&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Xtana/lab-chaking&quot;,
+    &quot;accountId&quot;: &quot;20ec1d7d-824b-468d-8f40-e06e7780c346&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/6.2.3/spring-aop-6.2.3-sources.jar!/org/springframework/aop/framework/CglibAopProxy.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/6.2.3/spring-aop-6.2.3-sources.jar!/org/springframework/aop/framework/ReflectiveMethodInvocation.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/6.2.3/spring-aop-6.2.3-sources.jar!/org/springframework/aop/support/AopUtils.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-tx/6.2.3/spring-tx-6.2.3.jar!/org/springframework/transaction/interceptor/TransactionAspectSupport.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots-meta/6.9.7.1/telegrambots-meta-6.9.7.1.jar!/org/telegram/telegrambots/meta/api/objects/replykeyboard/InlineKeyboardMarkup.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/telegram/telegrambots/6.9.7.1/telegrambots-6.9.7.1.jar!/org/telegram/telegrambots/updatesreceivers/DefaultBotSession.class" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -75,24 +95,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.LabCheckApplication.executor": "Run",
-    "Maven.LabCheck [clean].executor": "Run",
-    "Maven.LabCheck [install].executor": "Run",
-    "Maven.LabCheck [validate].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/MyProjects/java/LabCheck",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.LabCheckApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yaml.python-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.LabCheck [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.LabCheck [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.LabCheck [validate].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/MyProjects/java/lanit&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ru.samokhin.labCheck.adapter.bot.model.student" />
+      <recent name="ru.samokhin.labCheck.adapter.bot.handler.rolebased.student.completeTask.states" />
+      <recent name="ru.samokhin.labCheck.app.api.submission" />
+      <recent name="ru.samokhin.labCheck.adapter.bot.service.user.teacher.deleteStudentGroup" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ru.samokhin.labCheck.adapter.bot.model.student" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.LabCheckApplication">
     <configuration name="LabCheckApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.samokhin.labCheck.fw.spring.LabCheckApplication" />
       <module name="LabCheck" />
@@ -106,9 +139,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yaml.python-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="python-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.LabCheckApplication" />
+        <item itemvalue="Docker.docker-compose.yaml.python-service: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -153,13 +206,52 @@
       <option name="project" value="LOCAL" />
       <updated>1742505157412</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="commit">
+      <option name="closed" value="true" />
+      <created>1744457328068</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744457328069</updated>
+    </task>
+    <task id="LOCAL-00006" summary="commit">
+      <option name="closed" value="true" />
+      <created>1744457362187</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744457362187</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added bot authorization realization" />
     <MESSAGE value="." />
     <MESSAGE value="added realisation of AssignmentGroup" />
-    <option name="LAST_COMMIT_MESSAGE" value="added realisation of AssignmentGroup" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/samokhin/labCheck/adapter/bot/handler/rolebased/teacher/deleteAssignmentGroup/DeleteAssignmentGroupHandler.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

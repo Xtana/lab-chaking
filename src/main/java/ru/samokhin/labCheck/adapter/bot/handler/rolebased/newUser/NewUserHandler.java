@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.UserHandler;
-import ru.samokhin.labCheck.adapter.bot.keyboard.newUser.RegistrationInlineKeyboardBuilder;
+import ru.samokhin.labCheck.adapter.bot.keyboard.InlineKeyboardFactory;
 import ru.samokhin.labCheck.adapter.bot.model.newUser.RegistrationState;
 import ru.samokhin.labCheck.adapter.bot.model.StatusData;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
@@ -30,7 +30,7 @@ public class NewUserHandler implements UserHandler {
     private final MessageSender messageSender;
     private final RegistrationService registrationService;
     private final CreateStudentInbound createStudentInbound;
-    private final RegistrationInlineKeyboardBuilder registrationKeyboardBuilder;
+    private final InlineKeyboardFactory inlineKeyboardFactory;
     private final GetAllStudentGroupNameStringsInbound getAllStudentGroupNameStringsInbound;
 
     private static final Map<String, String> COMPLITE_STATE_BUTTON_DATA = new HashMap<>() {{
@@ -144,9 +144,9 @@ public class NewUserHandler implements UserHandler {
         return switch (state) {
             case REGISTRATION_AWAITING_FIRST_NAME -> null;
             case REGISTRATION_AWAITING_LAST_NAME, REGISTRATION_AWAITING_PATRONYMIC,
-                 REGISTRATION_AWAITING_STUDENT_CARD, REGISTRATION_AWAITING_EMAIL -> registrationKeyboardBuilder.getSingleInlineButton("Начать заново", "restart_registration");
-            case REGISTRATION_AWAITING_STUDENT_GROUP -> registrationKeyboardBuilder.getColumnInlineButton(getGroupDataMap());
-            case REGISTRATION_COMPLETED -> registrationKeyboardBuilder.getRowInlineButton(COMPLITE_STATE_BUTTON_DATA);
+                 REGISTRATION_AWAITING_STUDENT_CARD, REGISTRATION_AWAITING_EMAIL -> inlineKeyboardFactory.createSingleButtonKeyboard("Начать заново", "restart_registration");
+            case REGISTRATION_AWAITING_STUDENT_GROUP -> inlineKeyboardFactory.createColumnKeyboard(getGroupDataMap());
+            case REGISTRATION_COMPLETED -> inlineKeyboardFactory.createRowKeyboard(COMPLITE_STATE_BUTTON_DATA);
         };
     }
 

@@ -3,6 +3,7 @@ package ru.samokhin.labCheck.app.impl.assignmentGroup;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.samokhin.labCheck.app.api.assignmentGroup.AssignmentGroupRepository;
 import ru.samokhin.labCheck.app.api.assignmentGroup.FindAssignmentGroupByNameIgnoreCaseInbound;
 import ru.samokhin.labCheck.domain.assignmentGroup.AssignmentGroup;
@@ -13,6 +14,7 @@ public class FindAssignmentGroupByNameIgnoreCaseUseCase implements
         FindAssignmentGroupByNameIgnoreCaseInbound {
     private final AssignmentGroupRepository assignmentGroupRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public AssignmentGroup execute(String name) {
         return assignmentGroupRepository.findByNameIgnoreCase(name)

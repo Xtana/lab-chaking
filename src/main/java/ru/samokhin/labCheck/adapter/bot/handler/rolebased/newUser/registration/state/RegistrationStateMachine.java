@@ -23,7 +23,7 @@ public class RegistrationStateMachine {
         RegistrationState current = context.getCurrentState();
         RegistrationStateHandler handler = handlers.get(current);
         if (handler == null) {
-            throw new RuntimeException("Неизвестное состояние регистрации.");
+            throw new RuntimeException("Неизвестное состояние.");
         }
 
         StatusData result = handler.handle(context.getStudent(), input);

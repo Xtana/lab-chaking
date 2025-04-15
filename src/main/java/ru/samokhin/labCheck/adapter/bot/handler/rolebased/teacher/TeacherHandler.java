@@ -5,11 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.UserHandler;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.createAssignmentGroup.CreateAssignmentGroupHandler;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.createStudentGroup.CreateStudentGroupHandler;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.createTask.CreateTaskHandler;
-import ru.samokhin.labCheck.adapter.bot.keyboard.teacher.TeacherReplyKeyboardBuilder;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.deleteAssignmentGroup.DeleteAssignmentGroupHandler;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.deleteStudentGroup.DeleteStudentGroupHandler;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.deleteTask.DeleteTaskHandler;
+import ru.samokhin.labCheck.adapter.bot.keyboard.ReplyKeyboardFactory;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
 import ru.samokhin.labCheck.adapter.bot.model.teacher.TeacherState;
 import ru.samokhin.labCheck.adapter.bot.service.messaging.MessageSender;
@@ -26,10 +30,19 @@ import static ru.samokhin.labCheck.adapter.bot.model.teacher.TeacherState.*;
 public class TeacherHandler implements UserHandler {
     private final MessageSender messageSender;
     private final TeacherService teacherService;
+    private final ReplyKeyboardFactory replyKeyboardFactory;
     private final CreateTaskHandler createTaskHandler;
-    private final TeacherReplyKeyboardBuilder replyKeyboardBuilder;
+    private final CreateAssignmentGroupHandler createAssignmentGroupHandler;
+    private final DeleteAssignmentGroupHandler deleteAssignmentGroupHandler;
+    private final CreateStudentGroupHandler studentGroupHandler;
+    private final DeleteTaskHandler deleteTaskHandler;
+    private final DeleteStudentGroupHandler deleteStudentGroupHandler;
 
     private final List<String> REPLY_KEYBOARD_BUTTONS = new ArrayList<>(){{
+        add("Добавить уч группу");
+        add("Удалить уч группу");
+        add("Добавить студ группу");
+        add("Удалить студ группу");
         add("Создать задачу");
         add("Удалить задачу");
     }};
@@ -47,19 +60,27 @@ public class TeacherHandler implements UserHandler {
 
         if (!teacherService.isActive(tgChatId)) {
           teacherService.activateTeacher(tgChatId);
-          messageSender.send(tgChatId,"Сделайте выбор", absSender, replyKeyboardBuilder.createKeyboard(REPLY_KEYBOARD_BUTTONS, 2));
+          messageSender.send(tgChatId,"Выбери действие", absSender, replyKeyboardFactory.createKeyboard(REPLY_KEYBOARD_BUTTONS, 2));
           return;
         } else if (!teacherService.exists(tgChatId)) {
             switch (TeacherState.fromDisplayName(text)) {
+                case CREATE_ASSIGNMENT_GROUP -> teacherService.createTeacherState(tgChatId, CREATE_ASSIGNMENT_GROUP);
+                case DELETE_ASSIGNMENT_GROUP -> teacherService.createTeacherState(tgChatId, DELETE_ASSIGNMENT_GROUP);
+                case CREATE_STUDENT_GROUP -> teacherService.createTeacherState(tgChatId, CREATE_STUDENT_GROUP);
+                case DELETE_STUDENT_GROUP -> teacherService.createTeacherState(tgChatId, DELETE_STUDENT_GROUP);
                 case CREATE_TASK -> teacherService.createTeacherState(tgChatId, CREATE_TASK);
+                case DELETE_TASK -> teacherService.createTeacherState(tgChatId, DELETE_TASK);
             }
         }
 
         TeacherState teacherState = teacherService.getState(tgChatId);
         switch (teacherState) {
-            case CREATE_TASK -> {
-                createTaskHandler.handleNonCommandUpdate(absSender, message);
-            }
+            case CREATE_ASSIGNMENT_GROUP -> createAssignmentGroupHandler.handleNonCommandUpdate(absSender, message);
+            case DELETE_ASSIGNMENT_GROUP -> deleteAssignmentGroupHandler.handleNonCommandUpdate(absSender, message);
+            case CREATE_STUDENT_GROUP -> studentGroupHandler.handleNonCommandUpdate(absSender, message);
+            case DELETE_STUDENT_GROUP -> deleteStudentGroupHandler.handleNonCommandUpdate(absSender, message);
+            case CREATE_TASK -> createTaskHandler.handleNonCommandUpdate(absSender, message);
+            case DELETE_TASK -> deleteTaskHandler.handleNonCommandUpdate(absSender, message);
         }
     }
 
@@ -75,8 +96,12 @@ public class TeacherHandler implements UserHandler {
 
         TeacherState teacherState = teacherService.getState(tgChatId);
         switch (teacherState) {
+            case CREATE_ASSIGNMENT_GROUP -> createAssignmentGroupHandler.handleCallbackQuery(absSender, callbackQuery);
+            case DELETE_ASSIGNMENT_GROUP -> deleteAssignmentGroupHandler.handleCallbackQuery(absSender, callbackQuery);
+            case CREATE_STUDENT_GROUP -> studentGroupHandler.handleCallbackQuery(absSender, callbackQuery);
+            case DELETE_STUDENT_GROUP -> deleteStudentGroupHandler.handleCallbackQuery(absSender, callbackQuery);
             case CREATE_TASK -> createTaskHandler.handleCallbackQuery(absSender, callbackQuery);
+            case DELETE_TASK -> deleteTaskHandler.handleCallbackQuery(absSender, callbackQuery);
         }
-
     }
 }
