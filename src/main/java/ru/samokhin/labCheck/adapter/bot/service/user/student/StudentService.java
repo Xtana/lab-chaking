@@ -1,5 +1,7 @@
 package ru.samokhin.labCheck.adapter.bot.service.user.student;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.samokhin.labCheck.adapter.bot.model.student.StudentState;
 
 import java.util.Map;
@@ -7,6 +9,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+@Service
+@RequiredArgsConstructor
 public class StudentService {
     private final Map<Long, StudentState> studentStateMap = new ConcurrentHashMap<>();
     private final Set<Long> studentActiveSet = new CopyOnWriteArraySet<>();

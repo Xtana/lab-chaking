@@ -10,15 +10,14 @@ import java.util.Optional;
 
 public interface AssignmentGroupJpaRepository extends JpaRepository<AssignmentGroup, Long> {
     Optional<AssignmentGroup> findByNameIgnoreCase(String name);
-    @Query("""
-    SELECT DISTINCT ag.name
-    FROM AssignmentGroup ag
-    JOIN ag.tasks t
-    JOIN t.taskStudentGroups tsg
-    JOIN tsg.studentGroup sg
-    JOIN sg.students s
-    WHERE s.tgChatId = :tgChatId
-""")
-    List<String> findByStudentTgChatId(@Param("tgChatId") Long tgChatId);
 
+    @Query(value = """
+                SELECT DISTINCT ag.name
+                FROM ASSIGNMENT_GROUP ag
+                JOIN TASK t ON t.assignment_group_id = ag.id
+                JOIN TASK_STUDENT_GROUP tsg ON tsg.task_id = t.id
+                JOIN STUDENT s ON s.student_group_id = tsg.student_group_id
+                WHERE s.tg_chat_id = :tgChatId
+            """, nativeQuery = true)
+    List<String> findByStudentTgChatId(@Param("tgChatId") Long tgChatId);
 }

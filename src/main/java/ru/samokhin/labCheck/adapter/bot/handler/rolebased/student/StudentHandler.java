@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.UserHandler;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.student.completeTask.CompleteTaskHandler;
 import ru.samokhin.labCheck.adapter.bot.keyboard.ReplyKeyboardFactory;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
 import ru.samokhin.labCheck.adapter.bot.model.student.StudentState;
@@ -25,6 +26,7 @@ public class StudentHandler implements UserHandler {
     private final MessageSender messageSender;
     private final StudentService studentService;
     private final ReplyKeyboardFactory replyKeyboardFactory;
+    private final CompleteTaskHandler completeTaskHandler;
 
     private final List<String> REPLY_KEYBOARD_BUTTONS = new ArrayList<>(){{
         add("Выполнить задание");
@@ -53,7 +55,7 @@ public class StudentHandler implements UserHandler {
 
         StudentState studentState = studentService.getState(tgChatId);
         switch (studentState) {
-            case COMPLETE_TASK -> {}
+            case COMPLETE_TASK -> completeTaskHandler.handleNonCommandUpdate(absSender, message);
         }
     }
 
@@ -69,7 +71,7 @@ public class StudentHandler implements UserHandler {
 
         StudentState studentState = studentService.getState(tgChatId);
         switch (studentState) {
-            case COMPLETE_TASK -> {}
+            case COMPLETE_TASK -> completeTaskHandler.handleCallbackQuery(absSender, callbackQuery);
         }
     }
 }

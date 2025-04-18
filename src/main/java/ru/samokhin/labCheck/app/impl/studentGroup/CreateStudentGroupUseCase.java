@@ -12,7 +12,6 @@ import ru.samokhin.labCheck.domain.studentGroup.StudentGroup;
 public class CreateStudentGroupUseCase implements CreateStudentGroupInbound {
     private final StudentGroupRepository studentGroupRepository;
 
-    @Transactional
     @Override
     public boolean execute(String name) {
         try {

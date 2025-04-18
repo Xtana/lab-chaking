@@ -46,6 +46,7 @@ public class CompleteTaskHandler implements ProcessHandler {
         if (!completeTaskService.exists(tgChatId)) {
             completeTaskService.startCompletingTask(tgChatId);
             lastMessageForKbDeleting = askNextQuestion(absSender, tgChatId);
+            return;
         }
 
         //CompleteTaskState completeTaskState = completeTaskService.getState(tgChatId);
@@ -61,6 +62,11 @@ public class CompleteTaskHandler implements ProcessHandler {
         }
 
         lastMessageForKbDeleting = askNextQuestion(absSender, tgChatId);
+
+        if (completeTaskService.getState(tgChatId) == CompleteTaskState.COMPLETE_TASK_STATE_COMPLETE) {
+            completeTaskService.removeCompletingTaskData(tgChatId);
+            studentService.removeStudentData(tgChatId);
+        }
     }
 
     @Override
@@ -87,11 +93,6 @@ public class CompleteTaskHandler implements ProcessHandler {
         }
         lastMessageForKbDeleting = askNextQuestion(absSender, tgChatId);
         inlineKeyboardFactory.removeInlineKeyboard(absSender, callbackQuery);
-
-//        if (createTaskService.getState(tgChatId) == CreateTaskState.CREATE_TASK_COMPLETED) {
-//            createTaskService.removeCreateTaskData(tgChatId);
-//            teacherService.removeTeacherData(tgChatId);
-//        }
     }
 
     private Message askNextQuestion(AbsSender absSender, Long tgChatId) {
@@ -104,6 +105,7 @@ public class CompleteTaskHandler implements ProcessHandler {
             case COMPLETE_TASK_AWAITING_ASSIGNMENT_GROUP_NAME -> "Выберите учебную группу:";
             case COMPLETE_TASK_AWAITING_TASK_NAME -> "Выберите задачу:";
             case COMPLETE_TASK_AWAITING_CODE_STR -> "Введите код:";
+            case COMPLETE_TASK_STATE_COMPLETE -> "";
         };
     }
 
@@ -113,6 +115,7 @@ public class CompleteTaskHandler implements ProcessHandler {
             case COMPLETE_TASK_AWAITING_ASSIGNMENT_GROUP_NAME -> inlineKeyboardFactory.createColumnKeyboard(getAssignedGroupDataMap(tgChatId));
             case COMPLETE_TASK_AWAITING_TASK_NAME -> inlineKeyboardFactory.createColumnKeyboard(getTaskDataMap(completeTaskService.getContext(tgChatId).getAssignmentGroup()));
             case COMPLETE_TASK_AWAITING_CODE_STR -> inlineKeyboardFactory.createSingleButtonKeyboard("В меню", "В меню");
+            case COMPLETE_TASK_STATE_COMPLETE -> null;
         };
     }
 

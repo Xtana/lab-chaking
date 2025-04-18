@@ -1,7 +1,6 @@
 package ru.samokhin.labCheck.app.impl.python;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.samokhin.labCheck.app.api.python.PythonSyntaxCheckInbound;
 
 import java.io.*;
@@ -16,11 +15,10 @@ public class PythonSyntaxCheckUseCase implements PythonSyntaxCheckInbound {
         try {
             writeToFile(checkerDir + "/solution.py", pythonCode);
 
-            ProcessBuilder processBuilder = new ProcessBuilder("docker", "build", "-t", "python-checker", ".");
-            processBuilder.directory(new File("."));
+            ProcessBuilder builder = new ProcessBuilder("docker", "build", "-f", "docker/syntax/Dockerfile", "-t", "python-checker", ".");
+            builder.directory(new File("."));
 
-            // Стартуем сборку Docker-образа
-            Process buildProcess = processBuilder.start();
+            Process buildProcess = builder.start();
             int exitCode = buildProcess.waitFor();
 
             if (exitCode != 0) {
@@ -28,13 +26,11 @@ public class PythonSyntaxCheckUseCase implements PythonSyntaxCheckInbound {
                 return false;
             }
 
-            // Запускаем контейнер для проверки синтаксиса
             ProcessBuilder runProcess = new ProcessBuilder("docker", "run", "--rm", "python-checker");
             runProcess.directory(new File("."));
 
             Process checkProcess = runProcess.start();
 
-            // Чтение ошибок из stderr
             BufferedReader errorReader = new BufferedReader(new InputStreamReader(checkProcess.getErrorStream()));
             String line;
             System.out.println("=== Ошибки (stderr) ===");

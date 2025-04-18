@@ -5,7 +5,6 @@ import ru.samokhin.labCheck.domain.test.Test;
 
 import java.util.List;
 
-public interface TestRepository {
-    void save(Test test);
+public interface FindTestByTaskInbound {
     List<Test> findByTask(Task task);
 }

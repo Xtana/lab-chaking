@@ -5,7 +5,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Копируем код из папки checker в контейнер
-COPY src/main/resources/checker /app/checker
+COPY ../../src/main/resources/checker /app/checker
 
 # Запуск python с флагом для компиляции
 #CMD ["python", "checker/solution.py"]

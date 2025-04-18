@@ -7,7 +7,6 @@ import ru.samokhin.labCheck.adapter.bot.model.StatusData;
 import ru.samokhin.labCheck.adapter.bot.model.student.completeTask.CompleteTaskContext;
 import ru.samokhin.labCheck.adapter.bot.model.student.completeTask.CompleteTaskState;
 import ru.samokhin.labCheck.app.api.task.FindTaskByAssignmentGroupAndNameInbound;
-import ru.samokhin.labCheck.domain.assignmentGroup.AssignmentGroup;
 import ru.samokhin.labCheck.domain.task.Task;
 
 @Component
@@ -19,7 +18,7 @@ public class CompleteTaskTaskHandler implements CompleteTaskStateHandler {
     public StatusData handle(CompleteTaskContext context, String input) {
         input = input.trim();
         if (input.equals("")) {
-            return new StatusData(false, "Название задачи не может быть пустым");
+            return new StatusData(false, "Название задачи не может быть пустым!");
         }
         Task task;
         try {
@@ -36,11 +35,11 @@ public class CompleteTaskTaskHandler implements CompleteTaskStateHandler {
 
     @Override
     public CompleteTaskState currantState() {
-        return null;
+        return CompleteTaskState.COMPLETE_TASK_AWAITING_TASK_NAME;
     }
 
     @Override
     public CompleteTaskState nextState() {
-        return null;
+        return CompleteTaskState.COMPLETE_TASK_STATE_COMPLETE;
     }
 }
