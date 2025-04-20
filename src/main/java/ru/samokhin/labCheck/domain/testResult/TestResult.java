@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.samokhin.labCheck.domain.submission.Submission;
+import ru.samokhin.labCheck.domain.test.Test;
 
 @Entity
 @Table(
-        name = "RESULT",
+        name = "TEST_RESULT",
         uniqueConstraints = @UniqueConstraint(columnNames = {"test_id", "submission_id"})
 )
 @NoArgsConstructor
@@ -26,10 +28,17 @@ public class TestResult {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id", nullable = false)
-    private ru.samokhin.labCheck.domain.test.Test test;
+    private Test test;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "submission_id", nullable = false)
-    private ru.samokhin.labCheck.domain.submission.Submission submission;
+    private Submission submission;
+
+    public TestResult(String log, StatusTestResult status, Test test, Submission submission) {
+        this.log = log;
+        this.status = status;
+        this.test = test;
+        this.submission = submission;
+    }
 }
 

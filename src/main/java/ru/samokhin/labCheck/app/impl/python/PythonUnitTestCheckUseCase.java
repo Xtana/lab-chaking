@@ -11,31 +11,36 @@ public class PythonUnitTestCheckUseCase implements PythonUnitTestCheckInbound {
     private final String checkerDir = "src/main/resources/checker";
 
     @Override
-    public synchronized boolean execute(String studentCode, String testCode) {
+    public PythonUnitTestResult execute(String studentCode, String testCode) {
+        return executeWithLogs(studentCode, testCode);
+    }
+
+    public synchronized PythonUnitTestResult executeWithLogs(String studentCode, String testCode) {
         try {
             writeToFile(checkerDir + "/solution.py", studentCode);
             writeToFile(checkerDir + "/test.py", testCode);
 
-            ProcessBuilder build = new ProcessBuilder("docker", "build", "-f", "dockerfilesTest/Dockerfile", "-t", "python-checker", ".");
+            ProcessBuilder build = new ProcessBuilder("docker", "build", "-f", "docker/unitTest/Dockerfile", "-t", "unittest-checker", ".");
             build.directory(new File("."));
             Process buildProcess = build.start();
 
             if (buildProcess.waitFor() != 0) {
-                printErrors(buildProcess);
-                return false;
+                String buildLogs = getProcessLogs(buildProcess);
+                return new PythonUnitTestResult(false, "Ошибка сборки Docker образа:\n" + buildLogs);
             }
 
-            ProcessBuilder run = new ProcessBuilder("docker", "run", "--rm", "student-check");
+            ProcessBuilder run = new ProcessBuilder("docker", "run", "--rm", "unittest-checker");
             run.directory(new File("."));
             Process runProcess = run.start();
 
-            printOutput(runProcess);
+            String runLogs = getProcessLogs(runProcess);
+            boolean success = runProcess.waitFor() == 0;
 
-            return runProcess.waitFor() == 0;
+            return new PythonUnitTestResult(success, runLogs);
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return false;
+            return new PythonUnitTestResult(false, "Произошло исключение:\n" + e.getMessage());
         }
     }
 
@@ -45,24 +50,24 @@ public class PythonUnitTestCheckUseCase implements PythonUnitTestCheckInbound {
         }
     }
 
-    private void printOutput(Process process) throws IOException {
+    private String getProcessLogs(Process process) throws IOException {
+        StringBuilder logs = new StringBuilder();
+
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
              BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
 
             String line;
-            System.out.println("=== STDOUT ===");
-            while ((line = reader.readLine()) != null) System.out.println(line);
+            logs.append("=== STDOUT ===\n");
+            while ((line = reader.readLine()) != null) {
+                logs.append(line).append("\n");
+            }
 
-            System.out.println("=== STDERR ===");
-            while ((line = errorReader.readLine()) != null) System.out.println(line);
+            logs.append("=== STDERR ===\n");
+            while ((line = errorReader.readLine()) != null) {
+                logs.append(line).append("\n");
+            }
         }
-    }
 
-    private void printErrors(Process process) throws IOException {
-        try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
-            String line;
-            System.out.println("=== Docker build errors ===");
-            while ((line = errorReader.readLine()) != null) System.out.println(line);
-        }
+        return logs.toString();
     }
 }

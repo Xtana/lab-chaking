@@ -40,6 +40,6 @@ public class CompleteTaskTaskHandler implements CompleteTaskStateHandler {
 
     @Override
     public CompleteTaskState nextState() {
-        return CompleteTaskState.COMPLETE_TASK_STATE_COMPLETE;
+        return CompleteTaskState.COMPLETE_TASK_AWAITING_CODE_STR;
     }
 }

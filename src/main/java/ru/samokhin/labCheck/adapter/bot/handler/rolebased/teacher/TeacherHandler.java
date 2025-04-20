@@ -45,6 +45,7 @@ public class TeacherHandler implements UserHandler {
         add("Удалить студ группу");
         add("Создать задачу");
         add("Удалить задачу");
+        add("Получить результаты");
     }};
 
     @Override

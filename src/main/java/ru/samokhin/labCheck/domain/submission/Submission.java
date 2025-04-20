@@ -30,4 +30,10 @@ public class Submission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
+
+    public Submission(String script, Task task, Student student) {
+        this.script = script;
+        this.task = task;
+        this.student = student;
+    }
 }

@@ -1,6 +1,7 @@
 package ru.samokhin.labCheck.domain.student;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,11 @@ import ru.samokhin.labCheck.domain.studentGroup.StudentGroup;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)
@@ -26,11 +29,6 @@ public class Student {
     @Column(nullable = false)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_group_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private StudentGroup studentGroup;
-
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -40,14 +38,19 @@ public class Student {
     @Column(unique = true, nullable = false)
     private Long tgChatId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_group_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private StudentGroup studentGroup;
+
     public Student(String firstName, String patronymic, String lastName,
-                   StudentGroup studentGroup, String email, String studentCardNumber, Long tgChatId) {
+                   String email, String studentCardNumber, Long tgChatId, StudentGroup studentGroup) {
         this.firstName = firstName;
         this.patronymic = patronymic;
         this.lastName = lastName;
-        this.studentGroup = studentGroup;
         this.email = email;
         this.studentCardNumber = studentCardNumber;
         this.tgChatId = tgChatId;
+        this.studentGroup = studentGroup;
     }
 }

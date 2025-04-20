@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.ProcessHandler;
 import ru.samokhin.labCheck.adapter.bot.keyboard.InlineKeyboardFactory;
 import ru.samokhin.labCheck.adapter.bot.model.StatusData;
+import ru.samokhin.labCheck.adapter.bot.model.student.completeTask.CompleteTaskContext;
 import ru.samokhin.labCheck.adapter.bot.model.student.completeTask.CompleteTaskState;
 import ru.samokhin.labCheck.adapter.bot.service.messaging.MessageSender;
 import ru.samokhin.labCheck.adapter.bot.service.user.student.StudentService;
@@ -49,11 +50,19 @@ public class CompleteTaskHandler implements ProcessHandler {
             return;
         }
 
-        //CompleteTaskState completeTaskState = completeTaskService.getState(tgChatId);
+        CompleteTaskState completeTaskState = completeTaskService.getState(tgChatId);
+        switch (completeTaskState) {
+            case COMPLETE_TASK_AWAITING_ASSIGNMENT_GROUP_NAME ,COMPLETE_TASK_AWAITING_TASK_NAME -> {
+                messageSender.send(tgChatId, "Неверный способ взаимодействия с ботом", absSender);
+                return;
+            }
+        }
 
         StatusData statusData = completeTaskService.updateState(tgChatId, messageText);
         if (!statusData.isSuccess()) {
-            messageSender.send(tgChatId, statusData.getMessage(), absSender);
+            inlineKeyboardFactory.removeInlineKeyboard(absSender, lastMessageForKbDeleting);
+            lastMessageForKbDeleting = messageSender.send(tgChatId, statusData.getMessage(), absSender,
+                    inlineKeyboardFactory.createSingleButtonKeyboard("В меню", "В меню"));
             return;
         }
         InlineKeyboardMarkup inlineKeyboard = lastMessageForKbDeleting.getReplyMarkup();
@@ -104,9 +113,31 @@ public class CompleteTaskHandler implements ProcessHandler {
         return switch (state) {
             case COMPLETE_TASK_AWAITING_ASSIGNMENT_GROUP_NAME -> "Выберите учебную группу:";
             case COMPLETE_TASK_AWAITING_TASK_NAME -> "Выберите задачу:";
-            case COMPLETE_TASK_AWAITING_CODE_STR -> "Введите код:";
-            case COMPLETE_TASK_STATE_COMPLETE -> "";
+            case COMPLETE_TASK_AWAITING_CODE_STR -> taskDescriptionText(tgChatId);
+            case COMPLETE_TASK_STATE_COMPLETE -> answerDescriptionText(tgChatId);
         };
+    }
+
+    private String taskDescriptionText(Long tgChatId) {
+        CompleteTaskContext context = completeTaskService.getContext(tgChatId);
+        return String.format("""
+                Код можно присылать неограниченное кол-во раз.
+                В результат идет ваш последний запрос.
+                
+                Название задачи: %s
+                
+                Описание: %s
+                
+                Введите код:
+                """, context.getTask().getName(), context.getTask().getDescription());
+    }
+
+    private String answerDescriptionText(Long tgChatId) {
+        CompleteTaskContext context = completeTaskService.getContext(tgChatId);
+        return String.format("""
+                Ваш код принят!
+                Ваш код прошел %d/%d тестов.
+                """, context.getPassedTestCount(), context.getTotalTestCount());
     }
 
     private ReplyKeyboard formKeyboardForNextQuestion(Long tgChatId) {

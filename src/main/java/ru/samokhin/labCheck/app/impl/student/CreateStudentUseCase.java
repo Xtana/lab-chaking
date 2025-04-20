@@ -23,10 +23,10 @@ public class CreateStudentUseCase implements CreateStudentInbound {
                     firstName,
                     patronymic,
                     lastName,
-                    findStudentGroupByNameIgnoreCaseInbound.execute(groupName),
                     email,
                     studentCardNumber,
-                    tgChatId
+                    tgChatId,
+                    findStudentGroupByNameIgnoreCaseInbound.execute(groupName)
             );
             // TODO добавить проверку на уникальность всех зачаний
             studentRepository.save(student);

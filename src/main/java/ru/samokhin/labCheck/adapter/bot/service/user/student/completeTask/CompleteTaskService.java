@@ -27,7 +27,10 @@ public class CompleteTaskService {
         CompleteTaskContext context = new CompleteTaskContext(
                 CompleteTaskState.COMPLETE_TASK_AWAITING_ASSIGNMENT_GROUP_NAME,
                 new AssignmentGroup(),
-                new Task()
+                new Task(),
+                tgChatId,
+                0,
+                0
                 );
         completeTaskContext.put(tgChatId, context);
     }

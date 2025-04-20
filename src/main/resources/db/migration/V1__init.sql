@@ -85,13 +85,13 @@ CREATE TABLE TEST_RESULT (
     submission_id BIGINT NOT NULL,
     CONSTRAINT fk_result_test FOREIGN KEY (test_id) REFERENCES TEST(id) ON DELETE CASCADE,
     CONSTRAINT fk_result_submission FOREIGN KEY (submission_id) REFERENCES SUBMISSION(id) ON DELETE CASCADE,
-    CONSTRAINT fk_result_status FOREIGN KEY (status) REFERENCES STATUS_TEST_RESULT(status),
+    CONSTRAINT fk_result_status FOREIGN KEY (status) REFERENCES STATUS_TEST_RESULT(status) ON DELETE CASCADE,
     CONSTRAINT uq_test_result UNIQUE (test_id, submission_id)
 );
 
 INSERT INTO STATUS_TEST_RESULT (status) VALUES
-('SUCCESS'),
-('FAILURE');
+('PASS'),
+('FAIL');
 
 -- Заполнение таблицы STUDENT_GROUP
 INSERT INTO STUDENT_GROUP (name) VALUES

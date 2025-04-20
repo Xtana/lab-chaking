@@ -15,7 +15,7 @@ public class PythonSyntaxCheckUseCase implements PythonSyntaxCheckInbound {
         try {
             writeToFile(checkerDir + "/solution.py", pythonCode);
 
-            ProcessBuilder builder = new ProcessBuilder("docker", "build", "-f", "docker/syntax/Dockerfile", "-t", "python-checker", ".");
+            ProcessBuilder builder = new ProcessBuilder("docker", "build", "-f", "docker/syntax/Dockerfile", "-t", "syntax-checker", ".");
             builder.directory(new File("."));
 
             Process buildProcess = builder.start();
@@ -26,7 +26,7 @@ public class PythonSyntaxCheckUseCase implements PythonSyntaxCheckInbound {
                 return false;
             }
 
-            ProcessBuilder runProcess = new ProcessBuilder("docker", "run", "--rm", "python-checker");
+            ProcessBuilder runProcess = new ProcessBuilder("docker", "run", "--rm", "syntax-checker");
             runProcess.directory(new File("."));
 
             Process checkProcess = runProcess.start();

@@ -13,4 +13,7 @@ public class CompleteTaskContext {
     private CompleteTaskState currentState;
     private AssignmentGroup assignmentGroup;
     private Task task;
+    private Long tgChatId;
+    private Integer totalTestCount;
+    private Integer passedTestCount;
 }

@@ -1,4 +1,4 @@
-package ru.samokhin.labCheck.app.impl;
+package ru.samokhin.labCheck.app.impl.scenario;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

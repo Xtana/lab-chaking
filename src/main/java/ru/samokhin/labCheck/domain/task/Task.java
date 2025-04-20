@@ -1,10 +1,7 @@
 package ru.samokhin.labCheck.domain.task;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.samokhin.labCheck.domain.assignmentGroup.AssignmentGroup;
 import ru.samokhin.labCheck.domain.student.Student;
 import ru.samokhin.labCheck.domain.studentGroup.StudentGroup;
@@ -17,9 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)

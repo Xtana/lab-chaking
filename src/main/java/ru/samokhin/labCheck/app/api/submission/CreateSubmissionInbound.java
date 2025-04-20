@@ -4,7 +4,6 @@ import ru.samokhin.labCheck.domain.student.Student;
 import ru.samokhin.labCheck.domain.submission.Submission;
 import ru.samokhin.labCheck.domain.task.Task;
 
-public interface SubmissionRepository {
-    void save(Submission submission);
-    void deleteByStudentAndTask(Student student, Task task) ;
+public interface CreateSubmissionInbound {
+    Submission execute(String script, Task task, Student student);
 }
