@@ -8,4 +8,5 @@ import java.util.List;
 public interface TestRepository {
     void save(Test test);
     List<Test> findByTask(Task task);
+    Integer countByTask(Task task);
 }

@@ -13,6 +13,7 @@ import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.createTask.Cre
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.deleteAssignmentGroup.DeleteAssignmentGroupHandler;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.deleteStudentGroup.DeleteStudentGroupHandler;
 import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.deleteTask.DeleteTaskHandler;
+import ru.samokhin.labCheck.adapter.bot.handler.rolebased.teacher.getResults.GetResultsHandler;
 import ru.samokhin.labCheck.adapter.bot.keyboard.ReplyKeyboardFactory;
 import ru.samokhin.labCheck.adapter.bot.model.UserRole;
 import ru.samokhin.labCheck.adapter.bot.model.teacher.TeacherState;
@@ -37,6 +38,7 @@ public class TeacherHandler implements UserHandler {
     private final CreateStudentGroupHandler studentGroupHandler;
     private final DeleteTaskHandler deleteTaskHandler;
     private final DeleteStudentGroupHandler deleteStudentGroupHandler;
+    private final GetResultsHandler getResultsHandler;
 
     private final List<String> REPLY_KEYBOARD_BUTTONS = new ArrayList<>(){{
         add("Добавить уч группу");
@@ -64,13 +66,20 @@ public class TeacherHandler implements UserHandler {
           messageSender.send(tgChatId,"Выбери действие", absSender, replyKeyboardFactory.createKeyboard(REPLY_KEYBOARD_BUTTONS, 2));
           return;
         } else if (!teacherService.exists(tgChatId)) {
-            switch (TeacherState.fromDisplayName(text)) {
+            TeacherState teacherSate = null;
+            try {
+                teacherSate = TeacherState.fromDisplayName(text);
+            } catch (Exception e) {
+                messageSender.send(tgChatId, "Неизвестная команда, выберите команду на клавиатуре!", absSender);
+            }
+            switch (teacherSate) {
                 case CREATE_ASSIGNMENT_GROUP -> teacherService.createTeacherState(tgChatId, CREATE_ASSIGNMENT_GROUP);
                 case DELETE_ASSIGNMENT_GROUP -> teacherService.createTeacherState(tgChatId, DELETE_ASSIGNMENT_GROUP);
                 case CREATE_STUDENT_GROUP -> teacherService.createTeacherState(tgChatId, CREATE_STUDENT_GROUP);
                 case DELETE_STUDENT_GROUP -> teacherService.createTeacherState(tgChatId, DELETE_STUDENT_GROUP);
                 case CREATE_TASK -> teacherService.createTeacherState(tgChatId, CREATE_TASK);
                 case DELETE_TASK -> teacherService.createTeacherState(tgChatId, DELETE_TASK);
+                case GET_RESULTS -> teacherService.createTeacherState(tgChatId, GET_RESULTS);
             }
         }
 
@@ -82,6 +91,7 @@ public class TeacherHandler implements UserHandler {
             case DELETE_STUDENT_GROUP -> deleteStudentGroupHandler.handleNonCommandUpdate(absSender, message);
             case CREATE_TASK -> createTaskHandler.handleNonCommandUpdate(absSender, message);
             case DELETE_TASK -> deleteTaskHandler.handleNonCommandUpdate(absSender, message);
+            case GET_RESULTS -> getResultsHandler.handleNonCommandUpdate(absSender, message);
         }
     }
 
@@ -103,6 +113,7 @@ public class TeacherHandler implements UserHandler {
             case DELETE_STUDENT_GROUP -> deleteStudentGroupHandler.handleCallbackQuery(absSender, callbackQuery);
             case CREATE_TASK -> createTaskHandler.handleCallbackQuery(absSender, callbackQuery);
             case DELETE_TASK -> deleteTaskHandler.handleCallbackQuery(absSender, callbackQuery);
+            case GET_RESULTS -> getResultsHandler.handleCallbackQuery(absSender, callbackQuery);
         }
     }
 }

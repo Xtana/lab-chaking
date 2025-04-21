@@ -22,4 +22,9 @@ public class TestRepositoryAdapter implements TestRepository {
     public List<Test> findByTask(Task task) {
         return testJpaRepository.findByTask(task);
     }
+
+    @Override
+    public Integer countByTask(Task task) {
+        return testJpaRepository.countByTask(task);
+    }
 }

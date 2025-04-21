@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TestJpaRepository extends JpaRepository<Test, Long> {
     List<Test> findByTask(Task task);
+    Integer countByTask(Task task);
 }

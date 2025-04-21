@@ -9,7 +9,8 @@ public enum TeacherState {
     CREATE_STUDENT_GROUP("Добавить студ группу"),
     DELETE_STUDENT_GROUP("Удалить студ группу"),
     CREATE_TASK("Создать задачу"),
-    DELETE_TASK("Удалить задачу");
+    DELETE_TASK("Удалить задачу"),
+    GET_RESULTS("Получить результаты");
 
     private final String displayName;
 

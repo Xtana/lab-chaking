@@ -25,7 +25,6 @@ telegram:
 
 
 # logging
-logging:
-  level:
-    ru.lanit: debug
+#logging:
+#  level:
 #    org.springframework: debug
